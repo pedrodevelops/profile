@@ -1,0 +1,17 @@
+{
+  "name": "@profile/tailwind-config",
+  "version": "1.0.0",
+  "description": "Tailwind CSS configuration for Profile",
+  "private": true,
+  "exports": {
+    ".": "./tailwind.config.ts",
+    "./themes/colors.css": "./themes/colors.css"
+  },
+  "devDependencies": {
+    "@profile/typescript-config": "workspace:*",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

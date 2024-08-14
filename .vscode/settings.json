@@ -1,0 +1,12 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "spellright.language": ["en-US-10-1."],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

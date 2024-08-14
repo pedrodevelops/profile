@@ -1,0 +1,19 @@
+{
+  "name": "@profile/validations",
+  "version": "1.0.0",
+  "description": "Profile's shared validations",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@profile/eslint-config": "workspace:*",
+    "@profile/tailwind-config": "workspace:*",
+    "@profile/typescript-config": "workspace:*"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
