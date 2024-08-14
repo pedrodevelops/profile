@@ -36,7 +36,6 @@ export function SignInForm() {
         description: `Bem-vindo de volta, ${user.name}!`,
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof ApiError) {
         return toast({
           title: "Erro ao fazer login",

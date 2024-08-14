@@ -36,7 +36,6 @@ export function SignUpForm() {
         description: `Bem-vindo, ${user.name}!`,
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof ApiError) {
         return toast({
           title: "Erro ao criar conta",
