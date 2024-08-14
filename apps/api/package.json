@@ -1,8 +1,7 @@
 {
   "name": "@profile/platform-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Platform API for Profile",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
