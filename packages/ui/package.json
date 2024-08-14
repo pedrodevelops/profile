@@ -10,10 +10,10 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./utils": "./utils.ts",
-    "./button": "./src/button.tsx",
-    ".": "./src/components.tsx"
+    "./utils": "./src/utils.ts",
+    ".": "./src/index.tsx"
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
     "lint": "eslint src/",
@@ -35,9 +35,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@radix-ui/react-aspect-ratio": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.2"
+    "lucide-react": "^0.427.0",
+    "react-hook-form": "^7.52.2",
+    "tailwind-merge": "^2.5.2",
+    "zod": "^3.23.8"
   }
 }
