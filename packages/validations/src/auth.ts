@@ -1,12 +1,5 @@
 import * as z from "zod";
 
-export type HealthResponse = {
-  status: "UP" | "DOWN";
-  timestamp: string;
-  uptime: number;
-  environment: "development";
-};
-
 export const signUpSchema = z.object({
   name: z
     .string({ message: "O nome é obrigatório." })
