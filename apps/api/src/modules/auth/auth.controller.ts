@@ -1,8 +1,14 @@
-import { Body, Controller, Post, Response } from '@nestjs/common';
+import { Body, Controller, Post, Response, UsePipes } from '@nestjs/common';
 import { IsPublic } from './decorators/is-public.decorator';
-import { SignInInput, SignUpInput } from '@profile/validations/auth';
+import {
+  SignInInput,
+  signInSchema,
+  SignUpInput,
+  signUpSchema,
+} from '@profile/validations';
 import { AuthService } from './auth.service';
 import { Response as ExpressResponse } from 'express';
+import { ZodValidationPipe } from '@api/common/pipes/zod-validation.pipe';
 
 @Controller('auth')
 export class AuthController {
@@ -10,6 +16,7 @@ export class AuthController {
 
   @IsPublic()
   @Post('sign-in')
+  @UsePipes(new ZodValidationPipe(signInSchema))
   async signIn(@Body() body: SignInInput, @Response() res: ExpressResponse) {
     const { token, ...user } = await this.authService.signIn(
       body.name,
@@ -26,6 +33,7 @@ export class AuthController {
 
   @IsPublic()
   @Post('sign-up')
+  @UsePipes(new ZodValidationPipe(signUpSchema))
   async signUp(@Body() body: SignUpInput, @Response() res: ExpressResponse) {
     const { token, ...user } = await this.authService.signUp(
       body.name,
