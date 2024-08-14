@@ -1,4 +1,4 @@
-import { SignUpInput } from '@profile/validations/auth';
+import { SignUpInput } from '@profile/validations';
 import { UserEntity } from './user.entity';
 
 export class UserMapper {
