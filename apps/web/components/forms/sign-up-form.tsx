@@ -1,34 +1,33 @@
 "use client";
 
-import { signUpSchema } from "@profile/validations";
+import { SignUpInput, signUpSchema } from "@profile/validations";
 import { useForm } from "react-hook-form";
-import { unknown, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@web/services/auth.service";
 import {
   Form,
+  FormBox,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormTitle,
   useToast,
 } from "@profile/ui";
 import { Button, Input } from "@profile/ui";
 import { ApiError } from "@web/errors";
 import Link from "next/link";
 
-type SignUpSchema = z.infer<typeof signUpSchema>;
-
 export function SignUpForm() {
-  const form = useForm<SignUpSchema>({
+  const form = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
   });
 
   const { toast } = useToast();
 
-  async function onSubmit(data: SignUpSchema) {
+  async function onSubmit(data: SignUpInput) {
     try {
       const user = await authService.signUp(data);
       toast({
@@ -53,10 +52,10 @@ export function SignUpForm() {
   }
 
   return (
-    <div className="m-auto border p-6 rounded-lg drop-shadow-2xl">
-      <Form {...form}>
+    <Form {...form}>
+      <FormBox>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <p className="text-xl font-bold">Crie seu perfil</p>
+          <FormTitle>Crie seu perfil</FormTitle>
           <FormField
             control={form.control}
             name="name"
@@ -110,7 +109,7 @@ export function SignUpForm() {
             </Link>
           </div>
         </form>
-      </Form>
-    </div>
+      </FormBox>
+    </Form>
   );
 }

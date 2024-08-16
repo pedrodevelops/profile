@@ -7,12 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@web/services/auth.service";
 import {
   Form,
+  FormBox,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
+  FormTitle,
   useToast,
 } from "@profile/ui";
 import { Button, Input } from "@profile/ui";
@@ -53,10 +55,10 @@ export function SignInForm() {
   }
 
   return (
-    <div className="m-auto border p-6 rounded-lg drop-shadow-2xl">
+    <FormBox>
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-          <p className="text-xl font-bold">Bem-vindo de volta!</p>
+          <FormTitle>Bem-vindo de volta!</FormTitle>
           <FormField
             control={form.control}
             name="name"
@@ -98,6 +100,6 @@ export function SignInForm() {
           </div>
         </form>
       </Form>
-    </div>
+    </FormBox>
   );
 }
