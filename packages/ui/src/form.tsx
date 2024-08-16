@@ -167,6 +167,33 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
+const FormTitle = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => {
+  return (
+    <h1 ref={ref} className={cn("text-xl font-bold", className)} {...props} />
+  );
+});
+FormTitle.displayName = "FormTitle";
+
+const FormBox = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "m-auto max-w-[60rem] border p-6 rounded-lg shadow",
+        className
+      )}
+      {...props}
+    />
+  );
+});
+FormBox.displayName = "FormBox";
+
 export {
   useFormField,
   Form,
@@ -176,4 +203,6 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  FormTitle,
+  FormBox,
 };
