@@ -1,13 +1,15 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { ProfileModule } from './modules/profile/profile.module';
 
 @Module({
   imports: [
     AuthModule,
+    ProfileModule,
     JwtModule.registerAsync({
       global: true,
       imports: [ConfigModule],

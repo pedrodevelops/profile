@@ -7,12 +7,15 @@ import { UserService } from '../user/user.service';
 import * as bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { UserMapper } from '../user/user.mapper';
+import { ProfileMapper } from '../profile/profile.mapper';
+import { ProfileService } from '../profile/profile.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly profileService: ProfileService,
   ) {}
 
   /**
@@ -34,7 +37,7 @@ export class AuthService {
     }
 
     const token = this.jwtService.sign({
-      name: user.name,
+      username: user.name,
     });
 
     return {
@@ -66,16 +69,25 @@ export class AuthService {
 
     const hashedPassword = await bcryptjs.hash(password, 10);
 
-    const userEntity = UserMapper.fromDto({
+    const userEntity = UserMapper.toEntity({
       email,
       name: username,
       password: hashedPassword,
     });
 
+    const profileEntity = ProfileMapper.toEntity({
+      bio: `Nós não sabemos muito sobre ${username} ainda.`,
+      image: 'default-profile.png',
+      socials: [],
+      tags: [],
+      username,
+    });
+
     await this.userService.create(userEntity);
+    await this.profileService.create(profileEntity);
 
     const token = this.jwtService.sign({
-      name: userEntity.name,
+      username: userEntity.name,
     });
 
     return {
