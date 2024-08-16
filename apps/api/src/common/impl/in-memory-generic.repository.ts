@@ -15,6 +15,10 @@ export class InMemoryGenericRepository<Entity extends BaseEntity> {
     return this.entities.find((entity: any) => entity[key] === value) || null;
   }
 
+  async findManyByKey(key: string, value: any): Promise<Entity[]> {
+    return this.entities.filter((entity: any) => entity[key] === value);
+  }
+
   async update(entity: Entity): Promise<void> {
     const index = this.entities.findIndex((e: any) => e.id === entity.id);
     this.entities[index] = entity;
