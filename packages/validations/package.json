@@ -18,7 +18,7 @@
       "require": "./dist/index.js"
     }
   },
-  "types": "dist/index.d.ts",
+  "types": "./src/index.ts",
   "devDependencies": {
     "@profile/eslint-config": "workspace:*",
     "@profile/tailwind-config": "workspace:*",
@@ -26,6 +26,7 @@
     "tsup": "^8.2.4"
   },
   "dependencies": {
+    "@profile/constants": "workspace:*",
     "zod": "^3.23.8"
   }
 }
