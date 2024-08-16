@@ -1,0 +1,31 @@
+{
+  "name": "@profile/constants",
+  "version": "1.0.0",
+  "description": "Profile's shared constants",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "jest"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@profile/eslint-config": "workspace:*",
+    "@profile/tailwind-config": "workspace:*",
+    "@profile/typescript-config": "workspace:*",
+    "tsup": "^8.2.4"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
