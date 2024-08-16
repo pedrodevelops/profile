@@ -1,7 +1,8 @@
+import { SignInInput, SignUpInput } from "@profile/validations";
 import { ApiError } from "@web/errors";
 
 export class AuthService {
-  async signUp(data: any) {
+  async signUp(body: SignUpInput) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-up`,
       {
@@ -9,23 +10,23 @@ export class AuthService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
+        credentials: "include",
       }
     );
 
-    const respondeData = await response.json();
+    const data = await response.json();
 
     if (response.ok) {
-      return data;
+      return body;
     }
 
-    const errMessage =
-      respondeData.message || respondeData.error || "Failed to sign up";
+    const errMessage = data.message || data.error || "Failed to sign up";
 
     throw new ApiError(errMessage, response.status);
   }
 
-  async signIn(data: any) {
+  async signIn(body: SignInInput) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
       {
@@ -33,18 +34,18 @@ export class AuthService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
+        credentials: "include",
       }
     );
 
-    const respondeData = await response.json();
+    const data = await response.json();
 
     if (response.ok) {
-      return respondeData;
+      return data;
     }
 
-    const errMessage =
-      respondeData.message || respondeData.error || "Failed to sign in";
+    const errMessage = data.message || data.error || "Failed to sign in";
 
     throw new ApiError(errMessage, response.status);
   }
