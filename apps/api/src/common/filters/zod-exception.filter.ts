@@ -15,6 +15,7 @@ export class ZodExceptionFilter implements ExceptionFilter {
     const details = exception.errors.map((error) => {
       return {
         message: error.message,
+        path: error.path,
       };
     });
 
