@@ -24,7 +24,7 @@ import {
 } from "@web/services/profile.service";
 import * as React from "react";
 import { socialMediaIcons } from "../icons/social-media";
-import { XIcon } from "lucide-react";
+import { ExternalLinkIcon, SaveIcon, XIcon } from "lucide-react";
 import { AddTagDialog } from "../dialogs/add-tag-dialog";
 import { AddSocialMediaDialog } from "../dialogs/add-social-media-dialog";
 import Link from "next/link";
@@ -225,9 +225,18 @@ export function UpdateProfileForm() {
               <AddSocialMediaDialog setProfile={setProfile} profile={profile} />
             </div>
           </div>
-          <Button className="" type="submit">
-            Salvar alterações
-          </Button>
+          <div className="flex gap-4">
+            <Button className="flex gap-2" type="submit">
+              Salvar alterações
+              <SaveIcon size={16} />
+            </Button>
+            <Link href={`/${profile.username}`}>
+              <Button variant="link" className="flex gap-2" type="submit">
+                Visitar seu perfil
+                <ExternalLinkIcon size={16} />
+              </Button>
+            </Link>
+          </div>
         </form>
       </FormBox>
     </Form>

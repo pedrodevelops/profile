@@ -20,6 +20,7 @@ import {
 import { Button, Input } from "@profile/ui";
 import { ApiError } from "@web/errors";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type signInSchema = z.infer<typeof signInSchema>;
 
@@ -29,6 +30,7 @@ export function SignInForm() {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   async function onSubmit(data: signInSchema) {
     try {
@@ -37,6 +39,8 @@ export function SignInForm() {
         title: "Login efetuado com sucesso!",
         description: `Bem-vindo de volta, ${user.name}!`,
       });
+
+      router.push("/" + user.name);
     } catch (error) {
       if (error instanceof ApiError) {
         return toast({

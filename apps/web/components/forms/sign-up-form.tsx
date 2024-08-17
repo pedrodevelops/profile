@@ -19,6 +19,7 @@ import {
 import { Button, Input } from "@profile/ui";
 import { ApiError } from "@web/errors";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function SignUpForm() {
   const form = useForm<SignUpInput>({
@@ -26,6 +27,7 @@ export function SignUpForm() {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   async function onSubmit(data: SignUpInput) {
     try {
@@ -34,6 +36,8 @@ export function SignUpForm() {
         title: "Conta criada com sucesso!",
         description: `Bem-vindo, ${user.name}!`,
       });
+
+      router.push("/edit");
     } catch (error) {
       if (error instanceof ApiError) {
         return toast({

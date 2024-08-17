@@ -20,7 +20,7 @@ export default async function Profile({
   }
   // https://avatars.githubusercontent.com/u/115515311?v=4
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       <ProfileCard {...profile} />
     </div>
   );

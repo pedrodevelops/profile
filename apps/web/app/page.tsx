@@ -1,11 +1,13 @@
-import { Button } from "@profile/ui";
+import { Button, Logo } from "@profile/ui";
 import { ArrowRightIcon, EarthIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
+    <div className="space-y-4">
+      <Link href="/">
+        <Logo className="text-3xl" />
+      </Link>
       <main className="max-w-3xl">
         <h1 className="text-5xl font-extrabold text-left leading-tight text-primary mb-8">
           Construa sua presença digital com um{" "}

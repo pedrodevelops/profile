@@ -50,23 +50,9 @@ export const ProfileCard: React.FC<ProfileEntityProps> = ({
 
               return (
                 <li key={index}>
-                  <Link href={social.url}>{<Icon size={24} />}</Link>
-                </li>
-              );
-            })}
-            {socials.map((social, index) => {
-              const Icon = socialMediaIcons[social.media];
-              return (
-                <li key={index}>
-                  <Link href={social.url}>{<Icon size={24} />}</Link>
-                </li>
-              );
-            })}
-            {socials.map((social, index) => {
-              const Icon = socialMediaIcons[social.media];
-              return (
-                <li key={index}>
-                  <Link href={social.url}>{<Icon size={24} />}</Link>
+                  <Link href={social.url}>
+                    {<Icon size={24} className="text-zinc-700" />}
+                  </Link>
                 </li>
               );
             })}

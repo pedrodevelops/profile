@@ -23,9 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "bg-background'")}>
-        {children}
-        <Toaster />
+      <body className={cn("recursive-font", "bg-background min-h-screen flex")}>
+        <div className="m-auto h-fit ">
+          {children}
+          <Toaster />
+        </div>
       </body>
     </html>
   );
