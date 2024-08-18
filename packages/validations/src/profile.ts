@@ -10,9 +10,6 @@ export const createProfileSchema = z.object({
   bio: z
     .string({ message: "A bio deve ser uma string." })
     .max(255, { message: "A bio deve ter no máximo 255 caracteres." }),
-  image: z
-    .string({ message: "A imagem deve ser uma string." })
-    .url({ message: "A imagem deve ser uma URL válida." }),
   socials: z
     .array(
       z
@@ -80,3 +77,17 @@ export type UpdateProfileResponse = {
 };
 
 export type CreateProfileInput = z.infer<typeof createProfileSchema>;
+
+export type ProfileSocialMedia = {
+  media: string;
+  url: string;
+};
+
+export type Profile = {
+  id: string;
+  username: string;
+  bio: string;
+  iconUrl: string;
+  socials: Array<ProfileSocialMedia>;
+  tags: Array<string>;
+};

@@ -23,11 +23,11 @@ import {
   profileService,
 } from "@web/services/profile.service";
 import * as React from "react";
-import { socialMediaIcons } from "../icons/social-media";
-import { ExternalLinkIcon, SaveIcon, XIcon } from "lucide-react";
+import { ExternalLinkIcon, SaveIcon, UploadIcon, XIcon } from "lucide-react";
 import { AddTagDialog } from "../dialogs/add-tag-dialog";
 import { AddSocialMediaDialog } from "../dialogs/add-social-media-dialog";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function UpdateProfileForm() {
   const form = useForm<UpdateProfileInput>({
@@ -35,9 +35,11 @@ export function UpdateProfileForm() {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const [profile, setProfile] = React.useState<GetProfileResponse>();
   const [error, setError] = React.useState<string>();
+  const [file, setFile] = React.useState<File | null>(null);
 
   React.useEffect(() => {}, [profile]);
 
@@ -48,7 +50,9 @@ export function UpdateProfileForm() {
         setProfile(data);
       } catch (err) {
         if (err instanceof ApiError) {
-          setError(err.message);
+          if ([401, 403, 404].includes(err.code)) {
+            router.push("/auth/sign-in");
+          }
         } else {
           setError("An unexpected error occurred. Please try again later.");
         }
@@ -62,7 +66,7 @@ export function UpdateProfileForm() {
     return <p>{error}</p>;
   }
 
-  if (!profile) {
+  if (profile == undefined) {
     return <p>Loading...</p>;
   }
 
@@ -84,6 +88,10 @@ export function UpdateProfileForm() {
     try {
       const body = validUpdateAttempt.data;
       await profileService.updateProfile(body);
+
+      if (file) {
+        await profileService.updateProfilePicture(file);
+      }
     } catch (error) {
       if (error instanceof ApiError) {
         return toast({
@@ -120,23 +128,24 @@ export function UpdateProfileForm() {
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           <FormTitle>Atualize seu perfil</FormTitle>
           <div className="grid grid-flow-col gap-8 grid-cols-2 grid-rows-2">
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ícone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Adicione uma URL de imagem para o seu perfil.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+            <FormItem>
+              <FormLabel>Ícone</FormLabel>
+              <FormControl>
+                <Input
+                  id="picture"
+                  type="file"
+                  onChange={(e) => {
+                    if (e?.target.files) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormDescription>
+                Adicione uma imagem para seu perfil.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
             <FormField
               control={form.control}
               name="bio"
