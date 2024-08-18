@@ -75,9 +75,10 @@ export class AuthService {
       password: hashedPassword,
     });
 
+    const defaultBio = `Nós não sabemos muito sobre ${username} ainda.`;
+
     const profileEntity = ProfileMapper.toEntity({
-      bio: `Nós não sabemos muito sobre ${username} ainda.`,
-      image: 'default-profile.png',
+      bio: defaultBio,
       socials: [],
       tags: [],
       username,
