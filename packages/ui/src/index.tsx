@@ -12,3 +12,5 @@ export * from "./badge";
 export * from "./select";
 export * from "./textarea";
 export * from "./dialog";
+export * from "./logo";
+export * from "./avatar";
