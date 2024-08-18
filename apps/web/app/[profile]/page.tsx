@@ -12,13 +12,16 @@ export default async function Profile({
   try {
     profile = await profileService.getProfile(params.profile);
   } catch (error) {
+    let message = "An unexpected error occurred. Please try again later.";
+
     if (error instanceof ApiError) {
-      return <p>{error.message}</p>;
+      if (error.code === 404) {
+        message = `We couldn't find ${params.profile}'s profile 🫠`;
+      }
     }
 
-    return <p>Failed to get profile</p>;
+    return <p className="text-3xl">{message}</p>;
   }
-  // https://avatars.githubusercontent.com/u/115515311?v=4
   return (
     <div className="flex">
       <ProfileCard {...profile} />
