@@ -8,7 +8,7 @@ export type GetProfileResponse = {
   id: string;
   username: string;
   bio: string;
-  image: string;
+  iconUrl: string;
   tags: string[];
   socials: {
     media: string;
@@ -22,6 +22,7 @@ export class ProfileService {
       `${process.env.NEXT_PUBLIC_API_URL}/profile/${username}`,
       {
         credentials: "include",
+        cache: "no-cache",
       }
     );
 
@@ -58,6 +59,33 @@ export class ProfileService {
     }
 
     const errMessage = data.message || data.error || "Failed to update profile";
+
+    throw new ApiError(errMessage, response.status);
+  }
+
+  async updateProfilePicture(file: File): Promise<UpdateProfileResponse> {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/profile/me/icon`,
+      {
+        method: "PATCH",
+
+        credentials: "include",
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    }
+
+    const errMessage =
+      data.message || data.error || "Failed to update profile picture";
 
     throw new ApiError(errMessage, response.status);
   }
