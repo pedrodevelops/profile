@@ -7,7 +7,13 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from './decorators/is-public.decorator';
-import { Request } from 'express';
+import { Request as ExpressRequest } from 'express';
+
+export type AuthRequest = ExpressRequest & {
+  user: {
+    username: string;
+  };
+};
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -41,7 +47,7 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | null {
+  private extractTokenFromHeader(request: ExpressRequest): string | null {
     const [type, token] = request.cookies['Authorization']?.split(' ') ?? [];
     return type === 'Bearer' ? token : null;
   }
