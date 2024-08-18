@@ -8,7 +8,7 @@ export type ProfileSocial = {
 export type ProfileEntityProps = {
   username: string;
   bio: string;
-  image: string;
+  iconUrl?: string;
   socials: ProfileSocial[];
   tags: string[];
 };
@@ -16,18 +16,18 @@ export type ProfileEntityProps = {
 export class ProfileEntity extends BaseEntity {
   username: string;
   bio: string;
-  image: string;
+  iconUrl?: string;
   socials: ProfileSocial[];
   tags: string[];
 
   constructor(
-    { username, bio, image, socials, tags }: ProfileEntityProps,
+    { username, bio, iconUrl, socials, tags }: ProfileEntityProps,
     id?: string,
   ) {
     super(id);
     this.username = username;
     this.bio = bio;
-    this.image = image;
+    this.iconUrl = iconUrl;
     this.socials = socials;
     this.tags = tags;
   }

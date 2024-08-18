@@ -5,10 +5,14 @@ import {
 } from '@nestjs/common';
 import { ProfileRepository } from './profile.repository';
 import { ProfileEntity } from './profile.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly profileRepository: ProfileRepository) {}
+  constructor(
+    private readonly profileRepository: ProfileRepository,
+    private readonly configService: ConfigService,
+  ) {}
 
   /**
    * @throws ConflictException - If the username is already taken.
@@ -45,7 +49,7 @@ export class ProfileService {
     const updatedEntity = new ProfileEntity(
       {
         bio: data.bio ?? entity.bio,
-        image: data.image ?? entity.image,
+        iconUrl: data.iconUrl ?? entity.iconUrl,
         socials: data.socials ?? entity.socials,
         tags: data.tags ?? entity.tags,
         username: entity.username,
@@ -56,5 +60,9 @@ export class ProfileService {
     await this.profileRepository.update(updatedEntity);
 
     return updatedEntity;
+  }
+
+  getProfilePictureUrl(filename: string) {
+    return this.configService.getOrThrow('API_URL') + '/' + filename;
   }
 }
