@@ -18,7 +18,7 @@ export default function ProfileLayout({
         </Link>
       </header>
       {children}
-      <footer className="absolute bottom-0 w-[30rem] py-8 text-center text-muted-foreground">
+      <footer className="absolute bottom-0 left-0 w-full py-8 text-center text-muted-foreground">
         <p>
           Feito com{" "}
           <Link href="/">
