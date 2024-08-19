@@ -9,24 +9,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@profile/ui";
-import { socialMediaIcons } from "./icons/social-media";
+import { platformIcons } from "./icons/platforms";
+import { SocialPlatform } from "@profile/types";
 import Link from "next/link";
 
-export type ProfileSocial = {
-  media: string;
-  url: string;
-};
-
 export type ProfileEntityProps = {
-  username: string;
+  nickname: string;
   bio: string;
   iconUrl: string;
-  socials: ProfileSocial[];
+  socials: SocialPlatform[];
   tags: string[];
 };
 
 export const ProfileCard: React.FC<ProfileEntityProps> = ({
-  username,
+  nickname,
   bio,
   iconUrl,
   socials,
@@ -42,7 +38,7 @@ export const ProfileCard: React.FC<ProfileEntityProps> = ({
           </AvatarFallback>
         </Avatar>
         <CardTitle className="mt-4 text-2xl font-semibold text-gray-800 dark:text-white">
-          {username}
+          {nickname}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 space-y-6">
@@ -50,7 +46,7 @@ export const ProfileCard: React.FC<ProfileEntityProps> = ({
         <div className="mt-4">
           <ul className="gap-4 flex">
             {socials.map((social, index) => {
-              const Icon = socialMediaIcons[social.media];
+              const Icon = platformIcons[social.platform];
 
               if (Icon == undefined) {
                 return null;

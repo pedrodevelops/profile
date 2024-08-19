@@ -1,7 +1,7 @@
-export const SUPPORTED_SOCIAL_MEDIAS = [
+export const SUPPORTED_PLATFORMS = [
+  "instagram",
   "facebook",
   "twitter",
-  "instagram",
   "linkedin",
   "youtube",
   "tiktok",
@@ -15,9 +15,9 @@ export const SUPPORTED_SOCIAL_MEDIAS = [
 ] as const;
 
 export const TRUSTED_DOMAINS = [
+  "instagram.com",
   "facebook.com",
   "twitter.com",
-  "instagram.com",
   "linkedin.com",
   "youtube.com",
   "tiktok.com",
@@ -29,6 +29,3 @@ export const TRUSTED_DOMAINS = [
   "soundcloud.com",
   "github.com",
 ] as const;
-
-export type SocialMedia = (typeof SUPPORTED_SOCIAL_MEDIAS)[number];
-export type TrustedDomain = (typeof TRUSTED_DOMAINS)[number];

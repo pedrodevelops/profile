@@ -1,3 +1,4 @@
+import { SocialPlatform } from "@profile/types";
 import {
   Button,
   Dialog,
@@ -21,15 +22,13 @@ export function AddSocialMediaDialog({
   setProfile,
   profile,
 }: AddSocialMediaDialogProps) {
-  const defaultSocialMedia = {
-    media: "",
+  const defaultSocialMedia: SocialPlatform = {
+    platform: "",
     url: "",
   };
 
-  const [socialMedia, setSocialMedia] = React.useState<{
-    media: string;
-    url: string;
-  }>(defaultSocialMedia);
+  const [socialMedia, setSocialMedia] =
+    React.useState<SocialPlatform>(defaultSocialMedia);
 
   return (
     <Dialog>
@@ -50,7 +49,7 @@ export function AddSocialMediaDialog({
             onChange={(e) =>
               setSocialMedia({
                 ...socialMedia,
-                media: e.target.value,
+                platform: e.target.value,
               })
             }
           />

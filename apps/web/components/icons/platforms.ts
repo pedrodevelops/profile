@@ -16,13 +16,12 @@ import {
 
 import { IconType } from "react-icons";
 
-export const socialMediaIcons: Record<string, IconType> = {
+export const platformIcons: Record<string, IconType> = {
   instagram: SiInstagram,
-  twitter: SiX,
   facebook: SiFacebook,
+  twitter: SiX,
   linkedin: SiLinkedin,
   youtube: SiYoutube,
-  github: SiGithub,
   tiktok: SiTiktok,
   whatsapp: SiWhatsapp,
   telegram: SiTelegram,
@@ -30,6 +29,5 @@ export const socialMediaIcons: Record<string, IconType> = {
   twitch: SiTwitch,
   spotify: SiSpotify,
   soundcloud: SiSoundcloud,
+  github: SiGithub,
 };
-
-export type SocialMedia = keyof typeof socialMediaIcons;
