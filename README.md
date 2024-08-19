@@ -1,6 +1,6 @@
 # Profile
 
-**Profile** is a modern web application that allows users to create and customize their profiles with unique usernames, descriptions, links, tags, and profile pictures. Built with a robust tech stack, Profile provides an intuitive and seamless experience for managing personal branding.
+**Profile** is a modern web application that allows users to create and customize their profiles with unique nicknames, descriptions, links, tags, and profile pictures. Built with a robust tech stack, Profile provides an intuitive and seamless experience for managing personal branding.
 
 ## Technologies
 
@@ -10,7 +10,7 @@
 
 ## Features
 
-- **Create Profile**: Users can create a profile with a unique username, description, links, tags, and profile picture.
+- **Create Profile**: Users can create a profile with a unique nickname, description, links, tags, and profile picture.
 - **Edit Profile**: Users can edit their profile information at any time.
 - **View Profile**: Users can view their profile and share it with others.
 
