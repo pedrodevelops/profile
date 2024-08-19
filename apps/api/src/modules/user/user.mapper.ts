@@ -1,11 +1,11 @@
-import { SignUpInput } from '@profile/validations';
+import { SignUpRequest } from '@profile/types';
 import { UserEntity } from './user.entity';
 
 export class UserMapper {
-  static toEntity(dto: SignUpInput): UserEntity {
+  static toEntity(dto: SignUpRequest): UserEntity {
     return new UserEntity({
       email: dto.email,
-      name: dto.name,
+      nickname: dto.nickname,
       password: dto.password,
     });
   }
@@ -14,7 +14,7 @@ export class UserMapper {
     return {
       id: user.id,
       email: user.email,
-      name: user.name,
+      nickname: user.nickname,
     };
   }
 }

@@ -15,35 +15,37 @@ export class ProfileService {
   ) {}
 
   /**
-   * @throws ConflictException - If the username is already taken.
+   * @throws ConflictException - If the nickname is already taken.
    */
   async create(entity: ProfileEntity): Promise<void> {
-    const usernameTaken = await this.profileRepository.findByUsername(
-      entity.username,
+    const nicknameTaken = await this.profileRepository.findByNickname(
+      entity.nickname,
     );
 
-    if (usernameTaken != null) {
-      throw new ConflictException('Username already taken');
+    if (nicknameTaken != null) {
+      throw new ConflictException('Apelido já em uso');
     }
 
     return await this.profileRepository.create(entity);
   }
 
-  async findByUsername(username: string): Promise<ProfileEntity | null> {
-    return await this.profileRepository.findByUsername(username);
+  async findByNickname(nickname: string): Promise<ProfileEntity | null> {
+    return await this.profileRepository.findByNickname(nickname);
   }
 
   /**
    * @throws NotFoundException - If the profile is not found.
    */
   async update(
-    username: string,
+    nickname: string,
     data: Partial<Omit<ProfileEntity, 'id'>>,
   ): Promise<ProfileEntity> {
-    const entity = await this.profileRepository.findByUsername(username);
+    const entity = await this.profileRepository.findByNickname(nickname);
 
     if (entity == null) {
-      throw new NotFoundException('Profile not found');
+      throw new NotFoundException(
+        `Não conseguimos encontrar o perfil de ${nickname}.`,
+      );
     }
 
     const updatedEntity = new ProfileEntity(
@@ -52,7 +54,7 @@ export class ProfileService {
         iconUrl: data.iconUrl ?? entity.iconUrl,
         socials: data.socials ?? entity.socials,
         tags: data.tags ?? entity.tags,
-        username: entity.username,
+        nickname: entity.nickname,
       },
       entity.id,
     );

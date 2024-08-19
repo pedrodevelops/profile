@@ -6,8 +6,8 @@ export class InMemoryUserRepository
   extends InMemoryGenericRepository<UserEntity>
   implements UserRepository
 {
-  findByName(name: string): Promise<UserEntity | null> {
-    return this.findByKey('name', name);
+  findByNickname(nickname: string): Promise<UserEntity | null> {
+    return this.findByKey('nickname', nickname);
   }
   findByEmail(email: string): Promise<UserEntity | null> {
     return this.findByKey('email', email);

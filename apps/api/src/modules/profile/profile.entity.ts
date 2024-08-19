@@ -1,31 +1,31 @@
 import { BaseEntity } from '@api/common/domain/base.entity';
 
 export type ProfileSocial = {
-  media: string;
+  platform: string;
   url: string;
 };
 
 export type ProfileEntityProps = {
-  username: string;
+  nickname: string;
   bio: string;
-  iconUrl?: string;
+  iconUrl: string | null;
   socials: ProfileSocial[];
   tags: string[];
 };
 
 export class ProfileEntity extends BaseEntity {
-  username: string;
+  nickname: string;
   bio: string;
-  iconUrl?: string;
+  iconUrl: string | null;
   socials: ProfileSocial[];
   tags: string[];
 
   constructor(
-    { username, bio, iconUrl, socials, tags }: ProfileEntityProps,
+    { nickname, bio, iconUrl, socials, tags }: ProfileEntityProps,
     id?: string,
   ) {
     super(id);
-    this.username = username;
+    this.nickname = nickname;
     this.bio = bio;
     this.iconUrl = iconUrl;
     this.socials = socials;

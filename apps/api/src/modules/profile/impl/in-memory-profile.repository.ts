@@ -8,10 +8,10 @@ export class InMemoryProfileRepository
   extends InMemoryGenericRepository<ProfileEntity>
   implements ProfileRepository
 {
-  findByUsername(username: string): Promise<ProfileEntity | null> {
+  findByNickname(nickname: string): Promise<ProfileEntity | null> {
     return this.findByKey(
-      'username',
-      username,
+      'nickname',
+      nickname,
     ) as Promise<ProfileEntity | null>;
   }
 }

@@ -1,20 +1,20 @@
 import { BaseEntity } from '@api/common/domain/base.entity';
 
 type UserEntityProps = {
-  name: string;
+  nickname: string;
   email: string;
   password: string;
 };
 
 export class UserEntity extends BaseEntity {
-  name: string;
+  nickname: string;
   email: string;
   password: string;
 
-  constructor({ email, name, password }: UserEntityProps, id?: string) {
+  constructor({ email, nickname, password }: UserEntityProps, id?: string) {
     super(id);
     this.email = email;
-    this.name = name;
+    this.nickname = nickname;
     this.password = password;
   }
 }

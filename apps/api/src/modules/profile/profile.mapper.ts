@@ -1,19 +1,14 @@
 import { ProfileEntity } from './profile.entity';
-import { CreateProfileInput } from '@profile/validations';
+import { Profile, UpdateProfileRequest } from '@profile/types';
 
 export class ProfileMapper {
-  static toEntity(
-    createProfileDto: CreateProfileInput & {
-      username: string;
-      iconUrl?: string;
-    },
-  ) {
+  static toEntity(data: Omit<Profile, 'id'>) {
     return new ProfileEntity({
-      bio: createProfileDto.bio,
-      iconUrl: createProfileDto.iconUrl,
-      socials: createProfileDto.socials,
-      username: createProfileDto.username,
-      tags: createProfileDto.tags,
+      bio: data.bio,
+      iconUrl: data.iconUrl || null,
+      socials: data.socials,
+      nickname: data.nickname,
+      tags: data.tags,
     });
   }
 
@@ -22,12 +17,12 @@ export class ProfileMapper {
       bio: entity.bio,
       iconUrl: entity.iconUrl,
       socials: entity.socials,
-      username: entity.username,
+      nickname: entity.nickname,
       tags: entity.tags,
     };
   }
 
-  static filterPatchBody(data: Partial<CreateProfileInput>) {
+  static filterPatchBody(data: UpdateProfileRequest) {
     return {
       bio: data.bio,
       socials: data.socials,

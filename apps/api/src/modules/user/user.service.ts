@@ -14,8 +14,8 @@ export class UserService {
     return await this.userRepository.findById(id);
   }
 
-  async findByName(name: string): Promise<UserEntity | null> {
-    return await this.userRepository.findByName(name);
+  async findByNickname(name: string): Promise<UserEntity | null> {
+    return await this.userRepository.findByNickname(name);
   }
 
   async findByEmail(email: string): Promise<UserEntity | null> {

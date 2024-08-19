@@ -11,7 +11,7 @@ import { Request as ExpressRequest } from 'express';
 
 export type AuthRequest = ExpressRequest & {
   user: {
-    username: string;
+    nickname: string;
   };
 };
 

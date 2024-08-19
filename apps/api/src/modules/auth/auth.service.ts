@@ -21,12 +21,12 @@ export class AuthService {
   /**
    * @throws UnauthorizedException - If the user is not found or the password does not match.
    */
-  async signIn(username: string, password: string) {
-    const user = await this.userService.findByName(username);
+  async signIn(nickname: string, password: string) {
+    const user = await this.userService.findByNickname(nickname);
 
     if (user == null) {
       throw new UnauthorizedException(
-        'Usuário com este username não encontrado.',
+        'Usuário com este apelido não encontrado.',
       );
     }
 
@@ -37,24 +37,24 @@ export class AuthService {
     }
 
     const token = this.jwtService.sign({
-      username: user.name,
+      nickname: user.nickname,
     });
 
     return {
       id: user.id,
       email: user.email,
-      name: user.name,
+      nickname: user.nickname,
       token,
     };
   }
 
   /**
-   * @throws ConflictException - If the username or email is already in use.
+   * @throws ConflictException - If the nickname or email is already in use.
    */
-  async signUp(username: string, email: string, password: string) {
+  async signUp(nickname: string, email: string, password: string) {
     const promises = [
       this.userService.findByEmail(email),
-      this.userService.findByName(username),
+      this.userService.findByNickname(nickname),
     ];
 
     const [userByEmail, userByName] = await Promise.all(promises);
@@ -64,37 +64,38 @@ export class AuthService {
     }
 
     if (userByName != null) {
-      throw new ConflictException('Username já em uso.');
+      throw new ConflictException('Apelido já em uso.');
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
 
     const userEntity = UserMapper.toEntity({
       email,
-      name: username,
+      nickname,
       password: hashedPassword,
     });
 
-    const defaultBio = `Nós não sabemos muito sobre ${username} ainda.`;
+    const defaultBio = `Nós não sabemos muito sobre ${nickname} ainda.`;
 
     const profileEntity = ProfileMapper.toEntity({
       bio: defaultBio,
       socials: [],
       tags: [],
-      username,
+      nickname,
+      iconUrl: null,
     });
 
     await this.userService.create(userEntity);
     await this.profileService.create(profileEntity);
 
     const token = this.jwtService.sign({
-      username: userEntity.name,
+      nickname: userEntity.nickname,
     });
 
     return {
       id: userEntity.id,
       email: userEntity.email,
-      name: userEntity.name,
+      nickname: userEntity.nickname,
       token,
     };
   }
