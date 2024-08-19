@@ -1,10 +1,5 @@
 import z from "zod";
-import {
-  SUPPORTED_SOCIAL_MEDIAS,
-  SocialMedia,
-  TRUSTED_DOMAINS,
-  TrustedDomain,
-} from "@profile/constants";
+import { SUPPORTED_PLATFORMS, TRUSTED_DOMAINS } from "@profile/constants";
 
 export const createProfileSchema = z.object({
   bio: z
@@ -14,41 +9,27 @@ export const createProfileSchema = z.object({
     .array(
       z
         .object({
-          media: z
-            .string({ message: "A mídia social é obrigatória." })
+          platform: z
+            .string({ message: "A plataforma é obrigatória." })
             .toLowerCase()
             .max(32, {
-              message: "A mídia social deve ter no máximo 32 caracteres.",
+              message: "A plataforma deve ter no máximo 32 caracteres.",
             })
-            .refine(
-              (value) =>
-                SUPPORTED_SOCIAL_MEDIAS.includes(
-                  value.toLowerCase() as SocialMedia
-                ),
-              { message: "A mídia social não é suportada" }
-            ),
+            .refine(refinePlatform, {
+              message: "A plataforma não é suportada",
+            }),
           url: z
             .string({ message: "A URL é obrigatória." })
             .url({
               message: "A URL deve ser válida.",
             })
-            .refine(
-              (value) => {
-                const url = new URL(value);
-
-                return (
-                  url.protocol == "https:" &&
-                  TRUSTED_DOMAINS.includes(url.hostname as TrustedDomain)
-                );
-              },
-              { message: "A URL não é confiável." }
-            ),
+            .refine(refineUrl, { message: "A URL não é confiável." }),
         })
-        .refine((obj) => obj.url.includes(obj.media), {
+        .refine((obj) => obj.url.includes(obj.platform), {
           message: "URL inválida para a rede social informada.",
         })
     )
-    .max(10, { message: "Você pode adicionar no máximo 10 mídias sociais." }),
+    .max(10, { message: "Você pode adicionar no máximo 10 redes sociais." }),
   tags: z
     .array(
       z
@@ -58,36 +39,25 @@ export const createProfileSchema = z.object({
         .max(16, { message: "A tag deve ter no máximo 16 caracteres." }),
       { message: "Tags inválidas." }
     )
-    .max(15, { message: "Você pode adicionar no máximo 10 tags." }),
+    .max(15, { message: "Você pode adicionar no máximo 10 tags." })
+    .refine(refineTags, { message: "Tags repetidas." }),
 });
 
 export const updateProfileSchema = createProfileSchema.partial();
 
-export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+function refinePlatform(value: string) {
+  return SUPPORTED_PLATFORMS.includes(
+    value.toLowerCase() as (typeof SUPPORTED_PLATFORMS)[number]
+  );
+}
 
-export type UpdateProfileResponse = {
-  username: string;
-  bio: string;
-  image: string;
-  socials: {
-    media: SocialMedia;
-    url: string;
-  }[];
-  tags: string[];
-};
+function refineUrl(value: string) {
+  return TRUSTED_DOMAINS.includes(
+    new URL(value).hostname as (typeof TRUSTED_DOMAINS)[number]
+  );
+}
 
-export type CreateProfileInput = z.infer<typeof createProfileSchema>;
-
-export type ProfileSocialMedia = {
-  media: string;
-  url: string;
-};
-
-export type Profile = {
-  id: string;
-  username: string;
-  bio: string;
-  iconUrl: string;
-  socials: Array<ProfileSocialMedia>;
-  tags: Array<string>;
-};
+function refineTags(value: string[]) {
+  // Check if all tags are unique
+  return value.length === new Set(value).size;
+}
