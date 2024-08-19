@@ -1,0 +1,32 @@
+{
+  "name": "@profile/types",
+  "version": "1.0.0",
+  "description": "Profile's shared types",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "jest"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "./src/index.ts",
+  "devDependencies": {
+    "@profile/eslint-config": "workspace:*",
+    "@profile/tailwind-config": "workspace:*",
+    "@profile/typescript-config": "workspace:*",
+    "tsup": "^8.2.4"
+  },
+  "dependencies": {
+    "@profile/constants": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}
