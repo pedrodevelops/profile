@@ -1,8 +1,13 @@
-import { SignInInput, SignUpInput } from "@profile/validations";
+import {
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
+} from "@profile/types";
 import { ApiError } from "@web/errors";
 
 export class AuthService {
-  async signUp(body: SignUpInput) {
+  async signUp(body: SignUpRequest): Promise<SignUpResponse> {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-up`,
       {
@@ -18,15 +23,16 @@ export class AuthService {
     const data = await response.json();
 
     if (response.ok) {
-      return body;
+      return data;
     }
 
-    const errMessage = data.message || data.error || "Failed to sign up";
+    const errMessage =
+      data.message || data.error || "Erro ao cadastrar usuário";
 
     throw new ApiError(errMessage, response.status);
   }
 
-  async signIn(body: SignInInput) {
+  async signIn(body: SignInRequest): Promise<SignInResponse> {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/sign-in`,
       {
@@ -45,7 +51,7 @@ export class AuthService {
       return data;
     }
 
-    const errMessage = data.message || data.error || "Failed to sign in";
+    const errMessage = data.message || data.error || "Erro ao logar usuário";
 
     throw new ApiError(errMessage, response.status);
   }

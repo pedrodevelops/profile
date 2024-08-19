@@ -1,25 +1,14 @@
 import {
-  UpdateProfileInput,
+  GetProfileResponse,
+  UpdateProfileRequest,
   UpdateProfileResponse,
-} from "@profile/validations";
+} from "@profile/types";
 import { ApiError } from "@web/errors";
 
-export type GetProfileResponse = {
-  id: string;
-  username: string;
-  bio: string;
-  iconUrl: string;
-  tags: string[];
-  socials: {
-    media: string;
-    url: string;
-  }[];
-};
-
 export class ProfileService {
-  async getProfile(username: string): Promise<GetProfileResponse> {
+  async getProfile(nickname: string): Promise<GetProfileResponse> {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/profile/${username}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/profile/${nickname}`,
       {
         credentials: "include",
         cache: "no-cache",
@@ -32,13 +21,14 @@ export class ProfileService {
       return data;
     }
 
-    const errMessage = data.message || data.error || "Failed to get profile";
+    const errMessage =
+      data.message || data.error || "Não foi possível encontrar o perfil";
 
     throw new ApiError(errMessage, response.status);
   }
 
   async updateProfile(
-    body: UpdateProfileInput
+    body: UpdateProfileRequest
   ): Promise<UpdateProfileResponse> {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/profile/me`,
@@ -58,7 +48,8 @@ export class ProfileService {
       return data;
     }
 
-    const errMessage = data.message || data.error || "Failed to update profile";
+    const errMessage =
+      data.message || data.error || "Não foi possível atualizar o perfil";
 
     throw new ApiError(errMessage, response.status);
   }
@@ -85,7 +76,9 @@ export class ProfileService {
     }
 
     const errMessage =
-      data.message || data.error || "Failed to update profile picture";
+      data.message ||
+      data.error ||
+      "Não foi possível atualizar a foto de perfil";
 
     throw new ApiError(errMessage, response.status);
   }

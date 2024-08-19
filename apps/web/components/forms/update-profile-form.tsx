@@ -1,6 +1,6 @@
 "use client";
 
-import { UpdateProfileInput, updateProfileSchema } from "@profile/validations";
+import { updateProfileSchema } from "@profile/validations";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -18,19 +18,21 @@ import {
 } from "@profile/ui";
 import { Button, Input } from "@profile/ui";
 import { ApiError } from "@web/errors";
-import {
-  GetProfileResponse,
-  profileService,
-} from "@web/services/profile.service";
+import { profileService } from "@web/services/profile.service";
 import * as React from "react";
-import { ExternalLinkIcon, SaveIcon, UploadIcon, XIcon } from "lucide-react";
+import { ExternalLinkIcon, SaveIcon, XIcon } from "lucide-react";
 import { AddTagDialog } from "../dialogs/add-tag-dialog";
 import { AddSocialMediaDialog } from "../dialogs/add-social-media-dialog";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  GetProfileResponse,
+  UpdateProfileRequest,
+  UpdateProfileResponse,
+} from "@profile/types";
 
 export function UpdateProfileForm() {
-  const form = useForm<UpdateProfileInput>({
+  const form = useForm<UpdateProfileResponse>({
     resolver: zodResolver(updateProfileSchema),
   });
 
@@ -70,7 +72,7 @@ export function UpdateProfileForm() {
     return <p>Loading...</p>;
   }
 
-  async function onSubmit(data: UpdateProfileInput) {
+  async function onSubmit(data: UpdateProfileRequest) {
     const validUpdateAttempt = updateProfileSchema.safeParse({
       ...data,
       tags: profile?.tags,
@@ -114,7 +116,7 @@ export function UpdateProfileForm() {
       description: (
         <p>
           Você já pode ver suas alterações no seu{" "}
-          <Link className="font-bold underline" href={`/${profile?.username}`}>
+          <Link className="font-bold underline" href={`/${profile?.nickname}`}>
             perfil
           </Link>
         </p>
@@ -164,7 +166,7 @@ export function UpdateProfileForm() {
               <FormLabel>Suas tags</FormLabel>
               <ul className="flex gap-2 flex-wrap">
                 {profile.tags.length > 0 ? (
-                  profile.tags.map((tag) => (
+                  profile.tags.map((tag: string) => (
                     <div
                       key={tag}
                       className="pl-3 py-1 pr-0 flex gap-4 items-center rounded border"
@@ -205,7 +207,7 @@ export function UpdateProfileForm() {
                       className="pl-3 py-1 pr-0 flex gap-4 items-center rounded border"
                     >
                       <p className="text-sm font-semibold">
-                        {socialMedia.media}
+                        {socialMedia.platform}
                       </p>
                       <Button
                         onClick={() => {
@@ -239,7 +241,7 @@ export function UpdateProfileForm() {
               Salvar alterações
               <SaveIcon size={16} />
             </Button>
-            <Link href={`/${profile.username}`}>
+            <Link href={`/${profile.nickname}`}>
               <Button variant="link" className="flex gap-2" type="submit">
                 Visitar seu perfil
                 <ExternalLinkIcon size={16} />
