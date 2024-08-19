@@ -1,6 +1,7 @@
 "use client";
 
-import { SignUpInput, signUpSchema } from "@profile/validations";
+import { signUpSchema } from "@profile/validations";
+import { SignUpRequest } from "@profile/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@web/services/auth.service";
@@ -22,19 +23,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function SignUpForm() {
-  const form = useForm<SignUpInput>({
+  const form = useForm<SignUpRequest>({
     resolver: zodResolver(signUpSchema),
   });
 
   const { toast } = useToast();
   const router = useRouter();
 
-  async function onSubmit(data: SignUpInput) {
+  async function onSubmit(data: SignUpRequest) {
     try {
       const user = await authService.signUp(data);
       toast({
         title: "Conta criada com sucesso!",
-        description: `Bem-vindo, ${user.name}!`,
+        description: `Bem-vindo, ${user.nickname}!`,
       });
 
       router.push("/edit");
@@ -62,15 +63,15 @@ export function SignUpForm() {
           <FormTitle>Crie seu perfil</FormTitle>
           <FormField
             control={form.control}
-            name="name"
+            name="nickname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Apelido</FormLabel>
                 <FormControl>
                   <Input placeholder="pedrodevelops" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Seu nome é único e será usado como link para seu perfil.
+                  Seu apelido é único e será usado como link para seu perfil.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

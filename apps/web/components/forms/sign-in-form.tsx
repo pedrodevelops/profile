@@ -2,7 +2,7 @@
 
 import { signInSchema } from "@profile/validations";
 import { useForm } from "react-hook-form";
-import { unknown, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@web/services/auth.service";
 import {
@@ -37,10 +37,10 @@ export function SignInForm() {
       const user = await authService.signIn(data);
       toast({
         title: "Login efetuado com sucesso!",
-        description: `Bem-vindo de volta, ${user.name}!`,
+        description: `Bem-vindo de volta, ${user.nickname}!`,
       });
 
-      router.push("/" + user.name);
+      router.push("/" + user.nickname);
     } catch (error) {
       if (error instanceof ApiError) {
         return toast({
@@ -65,15 +65,15 @@ export function SignInForm() {
           <FormTitle>Bem-vindo de volta!</FormTitle>
           <FormField
             control={form.control}
-            name="name"
+            name="nickname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Apelido</FormLabel>
                 <FormControl>
                   <Input placeholder="pedrodevelops" {...field} />
                 </FormControl>
                 <FormDescription>
-                  Seu nome é único e será usado como link para seu perfil.
+                  Seu apelido é único e será usado como link para seu perfil.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
