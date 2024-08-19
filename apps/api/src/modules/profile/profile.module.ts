@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ProfileController } from './profile.controller';
 import { ProfileRepository } from './profile.repository';
-import { InMemoryProfileRepository } from './impl/in-memory-profile.repository';
 import { ProfileService } from './profile.service';
+import { PrismaProfileRepository } from './impl/prisma-profile.repository';
+import { PrismaService } from '@api/common/services/prisma.service';
 
 @Module({
   imports: [],
@@ -10,9 +11,10 @@ import { ProfileService } from './profile.service';
   providers: [
     {
       provide: ProfileRepository,
-      useClass: InMemoryProfileRepository,
+      useClass: PrismaProfileRepository,
     },
     ProfileService,
+    PrismaService,
   ],
   exports: [ProfileService],
 })
