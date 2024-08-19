@@ -1,1 +1,2 @@
-export * from "./social-medias";
+export * from "./reserved-nicknames";
+export * from "./supported-platforms";
