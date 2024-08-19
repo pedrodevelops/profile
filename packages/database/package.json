@@ -1,0 +1,30 @@
+{
+  "name": "@profile/database",
+  "version": "1.0.0",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "./src/index.ts",
+  "devDependencies": {
+    "@profile/eslint-config": "workspace:*",
+    "@profile/tailwind-config": "workspace:*",
+    "@profile/typescript-config": "workspace:*",
+    "prisma": "^5.18.0",
+    "tsup": "^8.2.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "@profile/constants": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}
