@@ -1,6 +1,6 @@
 "use client";
 
-import { SignUpInput, signUpSchema } from "@profile/validations";
+import { signUpSchema } from "@profile/validations";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authService } from "@web/services/auth.service";
@@ -20,21 +20,22 @@ import { Button, Input } from "@profile/ui";
 import { ApiError } from "@web/errors";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { SignUpRequest } from "@profile/types";
 
 export function SignUpForm() {
-  const form = useForm<SignUpInput>({
+  const form = useForm<SignUpRequest>({
     resolver: zodResolver(signUpSchema),
   });
 
   const { toast } = useToast();
   const router = useRouter();
 
-  async function onSubmit(data: SignUpInput) {
+  async function onSubmit(data: SignUpRequest) {
     try {
       const user = await authService.signUp(data);
       toast({
         title: "Conta criada com sucesso!",
-        description: `Bem-vindo, ${user.name}!`,
+        description: `Bem-vindo, ${user.nickname}!`,
       });
 
       router.push("/edit");
@@ -62,7 +63,7 @@ export function SignUpForm() {
           <FormTitle>Crie seu perfil</FormTitle>
           <FormField
             control={form.control}
-            name="name"
+            name="nickname"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nome</FormLabel>
