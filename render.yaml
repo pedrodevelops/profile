@@ -1,3 +1,9 @@
+envVarGroups:
+  - name: shared-env
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+
 services:
   - type: web
     runtime: node
@@ -7,9 +13,20 @@ services:
       pnpm install
       pnpm turbo db:generate
       pnpm turbo build
-    startCommand: pnpm turbo start --filter=@profile/platform-web -- --port 3000
+    startCommand: pnpm turbo start --filter=@profile/platform-web -- --port $PORT
     autoDeploy: true
     region: virginia
+    envVars:
+      - key: NODE_ENV
+        sync: false
+      - key: NEXT_PUBLIC_API_PORT
+        sync: false
+      - key: API_URL
+        sync: false
+      - key: WEB_APP_URL
+        sync: false
+      - key: PORT
+        sync: false
 
   - type: web
     runtime: node
@@ -19,6 +36,19 @@ services:
       pnpm install
       pnpm turbo db:generate
       pnpm turbo build
-    startCommand: pnpm turbo start --filter=@profile/platform-api -- --port 3001
+    startCommand: pnpm turbo start --filter=@profile/platform-api -- --port $PORT
     autoDeploy: true
     region: virginia
+    envVars:
+      - key: NODE_ENV
+        sync: false
+      - key: API_PORT
+        sync: false
+      - key: API_URL
+        sync: false
+      - key: LOG_LEVEL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: WEB_APP_URL
+        sync: false
