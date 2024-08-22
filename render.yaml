@@ -7,15 +7,13 @@ envVarGroups:
 services:
   - type: web
     runtime: node
-    name: profile-app
+    name: web-app
     plan: free
     buildCommand: |
       pnpm install
       pnpm turbo db:generate
       pnpm turbo build
-    startCommand: |
-      pnpm turbo start --filter=@profile/platform-web -- --port $PORT &
-      pnpm turbo start --filter=@profile/platform-api -- --port $API_PORT
+    startCommand: pnpm turbo start --filter=@profile/platform-web -- --port $PORT
     autoDeploy: true
     region: virginia
     envVars:
@@ -29,9 +27,30 @@ services:
         sync: false
       - key: PORT
         sync: false
+
+  - type: web
+    runtime: node
+    name: api-app
+    plan: free
+    buildCommand: |
+      pnpm install
+      pnpm turbo db:generate
+      pnpm turbo build
+    startCommand: pnpm turbo start --filter=@profile/platform-api -- --port $PORT
+    autoDeploy: true
+    region: virginia
+    envVars:
+      - key: NODE_ENV
+        sync: false
       - key: API_PORT
+        sync: false
+      - key: API_URL
         sync: false
       - key: LOG_LEVEL
         sync: false
       - key: JWT_SECRET
+        sync: false
+      - key: WEB_APP_URL
+        sync: false
+      - key: PORT
         sync: false
