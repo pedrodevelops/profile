@@ -64,6 +64,10 @@ export class ProfileService {
     return updatedEntity;
   }
 
+  async findRandom() {
+    return await this.profileRepository.findRandom();
+  }
+
   getProfilePictureUrl(filename: string) {
     return this.configService.getOrThrow('API_URL') + '/' + filename;
   }

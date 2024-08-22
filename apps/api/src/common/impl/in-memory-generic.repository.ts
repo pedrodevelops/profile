@@ -1,7 +1,7 @@
 import { BaseEntity } from '../domain/base.entity';
 
 export class InMemoryGenericRepository<Entity extends BaseEntity> {
-  private entities: Entity[] = [];
+  protected entities: Entity[] = [];
 
   async create(entity: Entity): Promise<void> {
     this.entities.push(entity);

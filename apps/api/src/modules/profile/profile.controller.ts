@@ -39,6 +39,17 @@ export class ProfileController {
     return ProfileMapper.toHTTP(profile);
   }
 
+  @Get('/random')
+  async findRandomProfile() {
+    const profile = await this.profileService.findRandom();
+
+    if (profile == null) {
+      throw new NotFoundException('Parece que não temos nenhum perfil ainda');
+    }
+
+    return ProfileMapper.toHTTP(profile);
+  }
+
   @IsPublic()
   @Get(':nickname')
   async findProfile(@Param('nickname') nickname: string) {

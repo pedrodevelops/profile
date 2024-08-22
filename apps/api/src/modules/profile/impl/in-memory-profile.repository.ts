@@ -14,4 +14,8 @@ export class InMemoryProfileRepository
       nickname,
     ) as Promise<ProfileEntity | null>;
   }
+
+  async findRandom(): Promise<ProfileEntity | null> {
+    return this.entities[Math.floor(Math.random() * this.entities.length)];
+  }
 }

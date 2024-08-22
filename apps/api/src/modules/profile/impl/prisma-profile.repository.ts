@@ -78,4 +78,30 @@ export class PrismaProfileRepository implements ProfileRepository {
       },
     });
   }
+
+  async findRandom(): Promise<ProfileEntity | null> {
+    const profile = await this.prismaService.profile.findFirst({
+      include: {
+        socials: true,
+      },
+    });
+
+    if (profile == null) {
+      return null;
+    }
+
+    return new ProfileEntity(
+      {
+        bio: profile.bio,
+        iconUrl: profile.iconUrl,
+        nickname: profile.nickname,
+        socials: profile.socials.map((social) => ({
+          platform: social.platform,
+          url: social.url,
+        })),
+        tags: profile.tags,
+      },
+      profile.id,
+    );
+  }
 }
