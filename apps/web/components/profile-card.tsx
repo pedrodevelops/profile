@@ -10,18 +10,10 @@ import {
   CardTitle,
 } from "@profile/ui";
 import { platformIcons } from "./icons/platforms";
-import { SocialPlatform } from "@profile/types";
+import { Profile, SocialPlatform } from "@profile/types";
 import Link from "next/link";
 
-export type ProfileEntityProps = {
-  nickname: string;
-  bio: string;
-  iconUrl: string;
-  socials: SocialPlatform[];
-  tags: string[];
-};
-
-export const ProfileCard: React.FC<ProfileEntityProps> = ({
+export const ProfileCard: React.FC<Omit<Profile, "id">> = ({
   nickname,
   bio,
   iconUrl,
@@ -32,7 +24,7 @@ export const ProfileCard: React.FC<ProfileEntityProps> = ({
     <Card className="max-w-lg p-4 m-auto shadow-lg">
       <CardHeader className="flex items-center">
         <Avatar>
-          <AvatarImage src={iconUrl} />
+          <AvatarImage src={iconUrl ?? "default.png"} />
           <AvatarFallback>
             <div className="h-32 w-32 bg-gradient-to-bl from-purple-400 to-pink-600"></div>
           </AvatarFallback>
