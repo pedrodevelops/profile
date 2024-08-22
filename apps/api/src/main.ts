@@ -15,6 +15,6 @@ async function bootstrap() {
     origin: configService.getOrThrow('WEB_APP_URL'),
     credentials: true,
   });
-  await app.listen(parseInt(configService.getOrThrow('API_PORT')));
+  await app.listen(parseInt(configService.get('API_PORT') || '3000'));
 }
 bootstrap();
