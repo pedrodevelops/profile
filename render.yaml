@@ -36,7 +36,7 @@ services:
       pnpm install
       pnpm turbo db:generate
       pnpm turbo build
-    startCommand: pnpm turbo start --filter=@profile/platform-api -- --port $PORT
+    startCommand: pnpm turbo start --filter=@profile/platform-api -- --port $API_PORT
     autoDeploy: true
     region: virginia
     envVars:
